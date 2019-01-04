@@ -1,6 +1,7 @@
 require 'simplecov'
 SimpleCov.start
 
+require 'date'
 require 'minitest/autorun'
 require "minitest/reporters"
 require 'bundler/setup'
@@ -161,6 +162,28 @@ class TodoListTest < MiniTest::Test
     end
     assert_instance_of(TodoList, return_value)
     assert_equal([@todo1], return_value.to_a)
+  end
+
+  def test_no_due_date
+    assert_nil(@todo1.due_date)
+  end
+
+  def test_due_date
+    due_date = Date.today + 3
+    @todo2.due_date = due_date
+    assert_equal(due_date, @todo2.due_date)
+  end
+
+  def test_to_s_with_due_date
+      @todo2.due_date = Date.new(2017, 4, 15)
+      output = <<-OUTPUT.chomp.gsub(/^\s+/, '')
+      ---- Today's Todos ----
+      [ ] Buy milk
+      [ ] Clean room (Due: Saturday April 15)
+      [ ] Go to gym
+      OUTPUT
+
+      assert_equal(output, @list.to_s)
   end
 
 end
