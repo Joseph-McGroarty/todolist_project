@@ -3,9 +3,10 @@ SimpleCov.start
 
 require 'minitest/autorun'
 require "minitest/reporters"
+require 'bundler/setup'
 Minitest::Reporters.use!
 
-require_relative 'to_do_list'
+require_relative '../lib/todolist_project'
 
 class TodoListTest < MiniTest::Test
 
